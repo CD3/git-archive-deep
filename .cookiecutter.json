@@ -1,0 +1,13 @@
+{
+  "_template": "https://github.com/cjolowicz/cookiecutter-hypermodern-python.git",
+  "author": "CD Clark III",
+  "copyright_year": "2022",
+  "development_status": "Development Status :: 3 - Alpha",
+  "email": "clifton.clark@gmail.com",
+  "friendly_name": "Git Archive Deep",
+  "github_user": "cd3",
+  "license": "MIT",
+  "package_name": "git_archive_deep",
+  "project_name": "git-archive-deep",
+  "version": "0.0.1"
+}
