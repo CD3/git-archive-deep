@@ -23,16 +23,17 @@ except ImportError:
 
 
 package = "git_archive_deep"
-python_versions = ["3.10", "3.9", "3.8", "3.7"]
+# python_versions = ["3.10", "3.9", "3.8", "3.7"]
+python_versions = ["3.8"]
 nox.needs_version = ">= 2021.6.6"
 nox.options.sessions = (
-    "pre-commit",
-    "safety",
+    # "pre-commit",
+    # "safety",
     "mypy",
     "tests",
-    "typeguard",
-    "xdoctest",
-    "docs-build",
+    # "typeguard",
+    # "xdoctest",
+    # "docs-build",
 )
 
 
@@ -161,12 +162,8 @@ def mypy(session: Session) -> None:
 def tests(session: Session) -> None:
     """Run the test suite."""
     session.install(".")
-    session.install("coverage[toml]", "pytest", "pygments")
-    try:
-        session.run("coverage", "run", "--parallel", "-m", "pytest", *session.posargs)
-    finally:
-        if session.interactive:
-            session.notify("coverage", posargs=[])
+    session.install("pytest")
+    session.run("pytest", *session.posargs)
 
 
 @session(python=python_versions[0])
