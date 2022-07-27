@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "git-archive-deep"
-version = "0.1.0"
+version = "0.1.1"
 description = "Git Archive Deep"
 authors = ["CD Clark III <clifton.clark@gmail.com>"]
 license = "MIT"
