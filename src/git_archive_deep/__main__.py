@@ -2,7 +2,7 @@
 import configparser
 import contextlib
 import os
-import pathlib
+from pathlib import Path
 import shutil
 import subprocess
 import sys
@@ -14,7 +14,7 @@ import click
 
 
 @contextlib.contextmanager
-def pushd(new_dir: pathlib.Path) -> Iterator[None]:
+def pushd(new_dir: Path) -> Iterator[None]:
     previous_dir = os.getcwd()
     os.chdir(new_dir)
     try:
@@ -32,23 +32,33 @@ def pushd(new_dir: pathlib.Path) -> Iterator[None]:
 def main(ctx: click.core.Context, ref: str, path: str, output: str) -> None:
     """git-archive-deep
 
-    Archive a git repo with submodules.
+    Archive a git repo, with submodules.
     """
+    if not Path(path).exists():
+        click.echo(f"ERROR: {path} does not exist.",err=True)
+        sys.exit(1)
+
     ctx.ensure_object(dict)
-    tmpdir = ctx.obj.get("tmpdir", pathlib.Path(tempfile.mkdtemp()))
+    tmpdir = ctx.obj.get("tmpdir", Path(tempfile.mkdtemp()))
     ctx.obj["tmpdir"] = tmpdir
     last_path = None
     if "current_path" in ctx.obj:
         last_path = ctx.obj["current_path"]
         ctx.obj["current_path"] = last_path / path
     else:
-        ctx.obj["current_path"] = pathlib.Path(pathlib.Path(path).name)
+        ctx.obj["current_path"] = Path(Path(path).name)
 
     current_path = ctx.obj["current_path"]
 
-    repo = pathlib.Path(path).absolute()
+    repo = Path(path).absolute()
     gitmodules_file = repo / ".gitmodules"
     with pushd(repo):
+
+        try:
+            subprocess.check_call(["git","rev-parse",ref],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
+        except:
+            click.echo(f"ERROR: {ref} is not a valid reference for {path}",err=True)
+            sys.exit(2)
 
         subprocess.run(
             [
@@ -90,8 +100,8 @@ def main(ctx: click.core.Context, ref: str, path: str, output: str) -> None:
 
     if last_path is None:
         if output is None or output == "":
-            output = pathlib.Path(path).name + "-" + ref + ".zip"
-        output_path = pathlib.Path(output)
+            output = Path(path).name + "-" + ref + ".zip"
+        output_path = Path(output)
 
         basename = str(output_path.parent / output_path.stem)
         ext = output_path.suffix[1:]
