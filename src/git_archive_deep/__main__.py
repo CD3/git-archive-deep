@@ -79,6 +79,7 @@ def main(ctx: click.core.Context, ref: str, path: str, output: str) -> None:
             file = tarfile.open(tmpdir / "current_archive.tar")
             file.extractall(".")
             file.close
+            os.remove(tmpdir / "current_archive.tar")
 
         if gitmodules_file.exists():
             gitmodules_config = configparser.ConfigParser()
