@@ -30,7 +30,6 @@ def pushd(new_dir: pathlib.Path) -> Iterator[None]:
 @click.option("--output", "-o", help="output file name.")
 @click.pass_context
 def main(ctx: click.core.Context, ref: str, path: str, output: str) -> None:
-    print(type(ctx))
     """git-archive-deep
 
     Archive a git repo with submodules.
