@@ -4,7 +4,7 @@ requires = [ "hatchling==1.26.3" ]
 
 [project]
 name = "git-archive-deep"
-version = "0.1.2"
+version = "0.1.3"
 description = "Archive git repositories deeply (including all nested submodules)."
 readme = "README.md"
 authors = [
