@@ -3,14 +3,20 @@
 ## Features
 
 - Archive a git repository with all sub-modules.
-- Speicify the a tag of ref of the repository to archive.
+- Specify a tag or ref of the repository to archive.
 
 ## Installation
 
-You can install _Git Archive Deep_ via [pip] from [PyPI]:
+You can install _Git Archive Deep_ via `pip` from `PyPI`:
 
 ```console
 $ pip install git-archive-deep
+```
+
+or via `uv` as a tool:
+
+```console
+$ uv tool install git-archive-deep
 ```
 
 ## Usage
